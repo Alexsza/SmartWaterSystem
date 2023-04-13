@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "ds.waterRecycling";
+option java_outer_classname = "WaterRecyclingImpl";
+
+package waterRecycling;
+
+// Interface exported by the server.
+service WaterRecycling {
+  
+  rpc CheckTankLevel(TankRequest) returns (TankResponse) {}
+    
+  rpc MonitorTankLevels(MonitorTankLevelsRequest) returns (stream MonitorTankLevelsResponse){}
+
+  rpc SwitchToRainwaterTank (stream RainwaterTankRequest) returns (RainwaterTankResponse){}
+
+}
+
+message TankRequest {
+  int32 tankId = 1;  
+}
+
+message TankResponse {
+  int32 tankLevel = 1;
+}
+
+message MonitorTankLevelsRequest {
+	int32 tankId = 1;
+	
+}
+
+message MonitorTankLevelsResponse {
+  int32 tankId = 1;
+  int32 currentLevel = 2;
+}
+
+message RainwaterTankRequest {
+	int32 tankId = 1;
+	
+}
+
+message RainwaterTankResponse {
+  int32 tankLevels = 1;
+  int32 currentTankUsed = 2;
+}
