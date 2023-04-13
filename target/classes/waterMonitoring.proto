@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "ds.waterMonitoring";
+option java_outer_classname = "WaterMonitoringImpl";
+
+package waterMonitoring;
+
+// Interface exported by the server.
+service WaterMonitoring {
+  
+  rpc MonitorArea(MonitorAreaRequest) returns (stream MonitorAreaResponse) {}
+
+  rpc SendSensorData(stream SendSensorDataRequest) returns (stream SendSensorDataResponse){}
+  
+}
+
+message MonitorAreaRequest {
+  string areaName = 1;  
+}
+
+message MonitorAreaResponse {
+  int32 waterUsage = 1;
+  string issues = 2;
+}
+
+message SendSensorDataRequest {
+  string areaName = 1;  
+  int32 waterUsage = 2;
+  string waterLeak = 3;
+  
+}
+
+message SendSensorDataResponse {
+	string alert = 1;
+	string recommendation = 2; 
+}
+
