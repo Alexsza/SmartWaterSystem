@@ -2,34 +2,35 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 option java_package = "ds.hotWater";
-option java_outer_classname = "HotWaterImpl";
+option java_outer_classname = "hotWaterImpl";
 
 package hotWater;
 
 // Interface exported by the server.
-service HotWater {
+service HotWaterService {
   
-  rpc SetTankTemperature(SetTankTemperatureRequest) returns (SetTankTemperatureResponse) {}
+  rpc SetTankTemperature(desiredTankTemp) returns (TankTempConfirm) {}
   
-  rpc SendUsageData(stream SendUsageDataRequest) returns (SendUsageDataResponse) {}
-    
+  rpc SendUsageData(stream UsageDataRequest) returns (UsageDataResponse) {}  
 }
 
-message SetTankTemperatureRequest {
+message desiredTankTemp {
    int32 desiredTemp = 1; 
+   
+  }
+
+message TankTempConfirm {
+   int32 currentTankTemp = 1;
+   string confirmation = 2; 
 }
 
-message SetTankTemperatureResponse {
-   string confirmation = 1; 
-}
-
-message SendUsageDataRequest {
+message UsageDataRequest {
   int32 hotWaterTemp = 1;
   int32 tankLevel = 2;
-  int32 flowrate = 3;
+  int32 flowRate = 3;
   int32 waterPressure = 4;
 }
 
-message SendUsageDataResponse {
+message UsageDataResponse {
    string recommendation = 1; 
 }
